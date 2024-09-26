@@ -1,0 +1,21 @@
+cmake_minimum_required(VERSION 3.29)
+project(lab0b)
+
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+set(SRC
+    src/main.cpp
+    src/csvParser.cpp
+)
+set(INCLUDE
+    include/csvParser.h
+)
+
+add_executable(${PROJECT_NAME} ${SRC} ${INCLUDE})
+
+#[[include(FetchContent)
+FetchContent_Declare(
+    googletest
+    URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
+)]]
