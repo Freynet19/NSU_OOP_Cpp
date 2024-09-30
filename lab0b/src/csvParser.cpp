@@ -43,12 +43,16 @@ int CsvParser::generateCSV(const std::string& outputFile) {
         wordsCount += pair.second;
     }
 
-    auto comp = [](const auto& a, const auto& b) { return b.second < a.second; };
+    auto comp = [](const auto& a, const auto& b) {
+        return b.second < a.second;
+    };
     std::sort(sortedWordList.begin(), sortedWordList.end(), comp);
 
     fileOut << "Word,Frequency,Frequency(%)" << std::endl;
     for (const auto& pair : sortedWordList) {
-        fileOut << pair.first << "," << pair.second << "," << pair.second * 100.0 / wordsCount << std::endl;
+        fileOut << pair.first << ","
+                << pair.second << ","
+                << pair.second * 100.0 / wordsCount << std::endl;
     }
 
     fileOut.close();

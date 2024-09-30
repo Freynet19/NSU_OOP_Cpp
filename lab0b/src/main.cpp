@@ -3,7 +3,10 @@
 
 int main(int argc, char* argv[]) {
     if (argc != 3) {
-        std::cout << "Usage: " << argv[0] << " input.txt output.csv" << std::endl;
+        std::cout << "Usage: "
+                  << argv[0]
+                  << " input.txt output.csv"
+                  << std::endl;
         return 1;
     }
 

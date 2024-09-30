@@ -1,16 +1,16 @@
-#ifndef CSVPARSER_H
-#define CSVPARSER_H
+#ifndef LAB0B_INCLUDE_CSVPARSER_H_
+#define LAB0B_INCLUDE_CSVPARSER_H_
 
 #include <map>
 #include <string>
 
 class CsvParser {
-public:
+ public:
     int scanTXT(const std::string& inputFile);
     int generateCSV(const std::string& outputFile);
 
-private:
+ private:
     std::map<std::string, int> wordFrequencyMap;
 };
 
-#endif
+#endif  // LAB0B_INCLUDE_CSVPARSER_H_
