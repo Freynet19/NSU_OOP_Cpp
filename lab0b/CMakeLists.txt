@@ -1,15 +1,19 @@
 cmake_minimum_required(VERSION 3.29)
 project(lab0b)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(SRC
     src/main.cpp
-    src/csvParser.cpp
+        src/Reader.cpp
+        src/Parser.cpp
+        src/Writer.cpp
 )
 set(INCLUDE
-    include/csvParser.h
+        include/Reader.h
+        include/Parser.h
+        include/Writer.h
 )
 
 add_executable(${PROJECT_NAME} ${SRC} ${INCLUDE})
