@@ -1,21 +1,16 @@
 #ifndef LAB0B_INCLUDE_PARSER_H_
 #define LAB0B_INCLUDE_PARSER_H_
 
-#include <map>
 #include <string>
 #include <vector>
 #include <utility>
 
-typedef std::vector<std::pair<std::string, int>> wordList;
-
 class Parser {
  public:
-    void parseForCSV(const std::map<std::string, int>& wordFrequencyMap);
-    [[nodiscard]] wordList getWordList() const;
-    [[nodiscard]] int getWordsCount() const;
+    int parseCSV(const std::string& inputFile, const std::string& outputFile);
 
  private:
-    wordList sortedList;
+    std::vector<std::pair<std::string, int>> sortedList;
     int wordsCount = 0;
 };
 

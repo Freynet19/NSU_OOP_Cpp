@@ -2,8 +2,16 @@
 
 #include <fstream>
 #include <algorithm>
+#include "../include/Reader.h"
+#include "../include/Writer.h"
 
-void Parser::parseForCSV(std::map<std::string, int> const& wordFrequencyMap) {
+int Parser::parseCSV(const std::string& inputFile,
+                     const std::string& outputFile) {
+    Reader reader;
+    if (reader.readTXT(inputFile) != 0) return 1;
+
+    const auto wordFrequencyMap = reader.getWordMap();
+
     for (const auto& pair : wordFrequencyMap) {
         sortedList.emplace_back(pair.first, pair.second);
         wordsCount += pair.second;
@@ -13,12 +21,8 @@ void Parser::parseForCSV(std::map<std::string, int> const& wordFrequencyMap) {
         return b.second < a.second;
     };
     std::sort(sortedList.begin(), sortedList.end(), comp);
-}
 
-wordList Parser::getWordList() const {
-    return sortedList;
-}
+    if (Writer::writeCSV(outputFile, sortedList, wordsCount) != 0) return 1;
 
-int Parser::getWordsCount() const {
-    return wordsCount;
+    return 0;
 }
