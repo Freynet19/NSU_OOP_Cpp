@@ -21,6 +21,9 @@ int Writer::writeCSV(const std::string& outputFile,
                 << pair.second * 100.0 / wordsCount << std::endl;
     }
 
+    std::cout << "CSV file successfully created: "
+    << std::filesystem::absolute(outputFile).string() << std::endl;
+
     fileOut.close();
     return 0;
 }

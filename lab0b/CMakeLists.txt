@@ -7,12 +7,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(SRC
     src/main.cpp
         src/Reader.cpp
-        src/Parser.cpp
+        src/FrequencyParser.cpp
         src/Writer.cpp
 )
 set(INCLUDE
         include/Reader.h
-        include/Parser.h
+        include/FrequencyParser.h
         include/Writer.h
 )
 

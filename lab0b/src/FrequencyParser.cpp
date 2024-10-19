@@ -1,12 +1,17 @@
-#include "../include/Parser.h"
+#include "../include/FrequencyParser.h"
 
 #include <fstream>
 #include <algorithm>
 #include "../include/Reader.h"
 #include "../include/Writer.h"
 
-int Parser::parseCSV(const std::string& inputFile,
-                     const std::string& outputFile) {
+FrequencyParser::FrequencyParser(
+    const std::string& inputTXT, const std::string& outputCSV) {
+    inputFile = inputTXT;
+    outputFile = outputCSV;
+}
+
+int FrequencyParser::GetWordFrequency() {
     Reader reader;
     if (reader.readTXT(inputFile) != 0) return 1;
 

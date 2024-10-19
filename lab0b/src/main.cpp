@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../include/Parser.h"
+#include "../include/FrequencyParser.h"
 
 int main(int argc, char* argv[]) {
     if (argc != 3) {
@@ -10,9 +10,8 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    Parser parser;
-    if (parser.parseCSV(argv[1], argv[2]) != 0) return 1;
+    FrequencyParser parser(argv[1], argv[2]);
+    if (parser.GetWordFrequency() != 0) return 1;
 
-    std::cout << "CSV file successfully created." << std::endl;
     return 0;
 }
