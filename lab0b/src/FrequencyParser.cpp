@@ -1,9 +1,9 @@
-#include "../include/FrequencyParser.h"
+#include "FrequencyParser.h"
 
 #include <fstream>
 #include <algorithm>
-#include "../include/Reader.h"
-#include "../include/Writer.h"
+#include "Reader.h"
+#include "Writer.h"
 
 FrequencyParser::FrequencyParser(
     const std::string& inputTXT, const std::string& outputCSV) {
@@ -23,7 +23,8 @@ int FrequencyParser::GetWordFrequency() {
     }
 
     auto comp = [](const auto& a, const auto& b) {
-        return b.second < a.second;
+        if (a.second != b.second) return a.second > b.second;
+        return a.first < b.first;
     };
     std::sort(sortedList.begin(), sortedList.end(), comp);
 

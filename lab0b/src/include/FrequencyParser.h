@@ -1,5 +1,5 @@
-#ifndef LAB0B_INCLUDE_FREQUENCYPARSER_H_
-#define LAB0B_INCLUDE_FREQUENCYPARSER_H_
+#ifndef LAB0B_SRC_INCLUDE_FREQUENCYPARSER_H_
+#define LAB0B_SRC_INCLUDE_FREQUENCYPARSER_H_
 
 #include <string>
 #include <vector>
@@ -17,4 +17,4 @@ class FrequencyParser {
     int wordsCount = 0;
 };
 
-#endif  // LAB0B_INCLUDE_FREQUENCYPARSER_H_
+#endif  // LAB0B_SRC_INCLUDE_FREQUENCYPARSER_H_

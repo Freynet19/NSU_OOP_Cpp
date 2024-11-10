@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../include/FrequencyParser.h"
+#include "FrequencyParser.h"
 
 int main(int argc, char* argv[]) {
     if (argc != 3) {

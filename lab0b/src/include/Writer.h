@@ -1,5 +1,5 @@
-#ifndef LAB0B_INCLUDE_WRITER_H_
-#define LAB0B_INCLUDE_WRITER_H_
+#ifndef LAB0B_SRC_INCLUDE_WRITER_H_
+#define LAB0B_SRC_INCLUDE_WRITER_H_
 
 #include <string>
 #include <vector>
@@ -11,4 +11,4 @@ class Writer {
       const std::vector<std::pair<std::string, int>>& wordList, int wordsCount);
 };
 
-#endif  // LAB0B_INCLUDE_WRITER_H_
+#endif  // LAB0B_SRC_INCLUDE_WRITER_H_

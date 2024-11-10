@@ -1,4 +1,4 @@
-#include "../include/Reader.h"
+#include "Reader.h"
 
 #include <iostream>
 #include <fstream>
