@@ -13,19 +13,24 @@ std::string read_file(std::ifstream file) {
 class FPTestFixture : public ::testing::Test {
  protected:
     FrequencyParser* parser;
+    Reader* input_reader;
+    CSVWriter* output_writer;
 
-    FPTestFixture(): parser(nullptr) {}
+    FPTestFixture(): parser(nullptr),
+    input_reader(nullptr), output_writer(nullptr) {}
     void SetUp() override {
         std::ofstream inputFile("test_input.txt");
         inputFile.close();
         remove("test_output.csv");
 
-        const auto input_reader = new Reader("test_input.txt");
-        const auto output_writer = new CSVWriter("test_output.csv");
+        input_reader = new Reader("test_input.txt");
+        output_writer = new CSVWriter("test_output.csv");
         parser = new FrequencyParser(input_reader, output_writer);
     }
 
     void TearDown() override {
+        delete input_reader;
+        delete output_writer;
         delete parser;
         remove("test_input.txt");
         remove("test_output.csv");
@@ -202,6 +207,8 @@ TEST(FPTestExceptions, NonExistentInputFile) {
         FAIL() << "Expected runtime error to be thrown";
     } catch (const std::runtime_error& e) {}
 
+    delete input_reader;
+    delete output_writer;
     remove("test_input.txt");
     remove("test_output.csv");
 }
@@ -219,6 +226,8 @@ TEST(FPTestExceptions, FileWriteError) {
         FAIL() << "Expected runtime error to be thrown";
     } catch (const std::runtime_error& e) {}
 
+    delete input_reader;
+    delete output_writer;
     remove("test_input.txt");
     remove("test_output.csv");
 }

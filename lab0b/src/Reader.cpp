@@ -1,5 +1,6 @@
 #include "Reader.h"
 
+#include <algorithm>
 #include <iostream>
 #include <fstream>
 #include <filesystem>
@@ -15,16 +16,16 @@ void Reader::readTXT() {
 
     std::string line;
     while (std::getline(fileIn, line)) {
-        std::string word;
-        for (char i : line) {
-            if (std::isalnum(i)) {
-                word.push_back(std::tolower(i));
-            } else if (!word.empty()) {
-                ++wordFrequencyMap[word];
-                word.clear();
-            }
+        for (char& c : line) {
+            if (!std::isalnum(c)) c = ' ';
         }
-        if (!word.empty()) ++wordFrequencyMap[word];
+        std::istringstream stream(line);
+        std::string word;
+        while (stream >> word) {
+            std::transform(word.begin(), word.end(),
+                word.begin(), tolower);
+            ++wordFrequencyMap[word];
+        }
     }
 
     fileIn.close();

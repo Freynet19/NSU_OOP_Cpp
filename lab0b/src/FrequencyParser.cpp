@@ -9,7 +9,6 @@ FrequencyParser::FrequencyParser(
     reader(*input_reader), writer(*output_writer) {}
 
 void FrequencyParser::parseAndWrite() {
-
     reader.readTXT();
     const auto wordFrequencyMap = reader.getWordMap();
 

@@ -1,4 +1,5 @@
 #include <iostream>
+
 #include "Reader.h"
 #include "FrequencyParser.h"
 #include "Writer.h"
@@ -25,5 +26,7 @@ int main(int argc, char* argv[]) {
         std::cerr << e.what() << std::endl;
     }
 
+    delete input_reader;
+    delete output_writer;
     return 0;
 }
