@@ -1,20 +1,16 @@
 #include "FrequencyParser.h"
 
-#include <fstream>
 #include <algorithm>
 #include "Reader.h"
 #include "Writer.h"
 
 FrequencyParser::FrequencyParser(
-    const std::string& inputTXT, const std::string& outputCSV) {
-    inputFile = inputTXT;
-    outputFile = outputCSV;
-}
+    const Reader* input_reader, const CSVWriter* output_writer):
+    reader(*input_reader), writer(*output_writer) {}
 
-int FrequencyParser::GetWordFrequency() {
-    Reader reader;
-    if (reader.readTXT(inputFile) != 0) return 1;
+void FrequencyParser::parseAndWrite() {
 
+    reader.readTXT();
     const auto wordFrequencyMap = reader.getWordMap();
 
     for (const auto& pair : wordFrequencyMap) {
@@ -28,7 +24,5 @@ int FrequencyParser::GetWordFrequency() {
     };
     std::sort(sortedList.begin(), sortedList.end(), comp);
 
-    if (Writer::writeCSV(outputFile, sortedList, wordsCount) != 0) return 1;
-
-    return 0;
+    writer.writeCSV(sortedList, wordsCount);
 }

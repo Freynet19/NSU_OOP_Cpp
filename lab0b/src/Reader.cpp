@@ -4,12 +4,13 @@
 #include <fstream>
 #include <filesystem>
 
-int Reader::readTXT(const std::string& inputFile) {
+Reader::Reader(const char* inputTXT): inputFile(inputTXT) {}
+
+void Reader::readTXT() {
     std::ifstream fileIn(inputFile);
     if (!fileIn.is_open()) {
-        std::cerr << "Error opening input file: "
-        << std::filesystem::absolute(inputFile).string() << std::endl;
-        return 1;
+        throw std::runtime_error("Error opening input file: " +
+            std::filesystem::absolute(inputFile).string());
     }
 
     std::string line;
@@ -27,7 +28,6 @@ int Reader::readTXT(const std::string& inputFile) {
     }
 
     fileIn.close();
-    return 0;
 }
 
 std::map<std::string, int> Reader::getWordMap() const {

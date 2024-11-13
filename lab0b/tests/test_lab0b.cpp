@@ -1,16 +1,32 @@
 #include <gtest/gtest.h>
 #include "FrequencyParser.h"
 #include <fstream>
+#include <valarray>
+
+std::string read_file(std::ifstream file) {
+    std::stringstream buffer;
+    buffer << file.rdbuf();
+    file.close();
+    return buffer.str();
+}
 
 class FPTestFixture : public ::testing::Test {
  protected:
+    FrequencyParser* parser;
+
+    FPTestFixture(): parser(nullptr) {}
     void SetUp() override {
         std::ofstream inputFile("test_input.txt");
         inputFile.close();
         remove("test_output.csv");
+
+        const auto input_reader = new Reader("test_input.txt");
+        const auto output_writer = new CSVWriter("test_output.csv");
+        parser = new FrequencyParser(input_reader, output_writer);
     }
 
     void TearDown() override {
+        delete parser;
         remove("test_input.txt");
         remove("test_output.csv");
     }
@@ -21,31 +37,35 @@ class FPTestFixture : public ::testing::Test {
     inputFile << "ENTER TEXT HERE";
     inputFile.close();
 
-    FrequencyParser parser("test_input.txt", "test_output.csv");
-    EXPECT_EQ(parser.GetWordFrequency(), 0);
+    try {
+        parser->parseAndWrite();
+    } catch (const std::runtime_error& e) {
+        FAIL() << "Unexpected exception: " << e.what();
+    }
 
     std::ifstream outputFile("test_output.csv");
     ASSERT_TRUE(outputFile.is_open());
 
-    std::string line;
-    std::getline(outputFile, line);
-    EXPECT_EQ(line, "Word,Frequency,Frequency(%)");
-    EXPECT_FALSE(std::getline(outputFile, line));
+    std::string expect = "Word,Frequency,Frequency(%)\n"
+    "hello,2,66.6667\n"
+    "world,1,33.3333\n";
+    EXPECT_EQ(expect, read_file(std::move(outputFile)));
 
     outputFile.close();
 }*/
 
 TEST_F(FPTestFixture, EmptyInput) {
-    FrequencyParser parser("test_input.txt", "test_output.csv");
-    EXPECT_EQ(parser.GetWordFrequency(), 0);
+    try {
+        parser->parseAndWrite();
+    } catch (const std::runtime_error& e) {
+        FAIL() << "Unexpected exception: " << e.what();
+    }
 
     std::ifstream outputFile("test_output.csv");
     ASSERT_TRUE(outputFile.is_open());
 
-    std::string line;
-    std::getline(outputFile, line);
-    EXPECT_EQ(line, "Word,Frequency,Frequency(%)");
-    EXPECT_FALSE(std::getline(outputFile, line));
+    std::string expect = "Word,Frequency,Frequency(%)\n";
+    EXPECT_EQ(expect, read_file(std::move(outputFile)));
 
     outputFile.close();
 }
@@ -55,20 +75,19 @@ TEST_F(FPTestFixture, HelloWorld) {
     inputFile << "hello world\nhello";
     inputFile.close();
 
-    FrequencyParser parser("test_input.txt", "test_output.csv");
-    EXPECT_EQ(parser.GetWordFrequency(), 0);
+    try {
+        parser->parseAndWrite();
+    } catch (const std::runtime_error& e) {
+        FAIL() << "Unexpected exception: " << e.what();
+    }
 
     std::ifstream outputFile("test_output.csv");
     ASSERT_TRUE(outputFile.is_open());
 
-    std::string line;
-    std::getline(outputFile, line);
-    EXPECT_EQ(line, "Word,Frequency,Frequency(%)");
-    std::getline(outputFile, line);
-    EXPECT_EQ(line, "hello,2,66.6667");
-    std::getline(outputFile, line);
-    EXPECT_EQ(line, "world,1,33.3333");
-    EXPECT_FALSE(std::getline(outputFile, line));
+    std::string expect = "Word,Frequency,Frequency(%)\n"
+    "hello,2,66.6667\n"
+    "world,1,33.3333\n";
+    EXPECT_EQ(expect, read_file(std::move(outputFile)));
 
     outputFile.close();
 }
@@ -78,22 +97,20 @@ TEST_F(FPTestFixture, LowerHigherCases) {
     inputFile << "lEsEnKa PREVED MEDved LeSeNkA";
     inputFile.close();
 
-    FrequencyParser parser("test_input.txt", "test_output.csv");
-    EXPECT_EQ(parser.GetWordFrequency(), 0);
+    try {
+        parser->parseAndWrite();
+    } catch (const std::runtime_error& e) {
+        FAIL() << "Unexpected exception: " << e.what();
+    }
 
     std::ifstream outputFile("test_output.csv");
     ASSERT_TRUE(outputFile.is_open());
 
-    std::string line;
-    std::getline(outputFile, line);
-    EXPECT_EQ(line, "Word,Frequency,Frequency(%)");
-    std::getline(outputFile, line);
-    EXPECT_EQ(line, "lesenka,2,50");
-    std::getline(outputFile, line);
-    EXPECT_EQ(line, "medved,1,25");
-    std::getline(outputFile, line);
-    EXPECT_EQ(line, "preved,1,25");
-    EXPECT_FALSE(std::getline(outputFile, line));
+    std::string expect = "Word,Frequency,Frequency(%)\n"
+    "lesenka,2,50\n"
+    "medved,1,25\n"
+    "preved,1,25\n";
+    EXPECT_EQ(expect, read_file(std::move(outputFile)));
 
     outputFile.close();
 }
@@ -103,32 +120,25 @@ TEST_F(FPTestFixture, AlphabeticSort) {
     inputFile << "C A B Z Y X 111 1";
     inputFile.close();
 
-    FrequencyParser parser("test_input.txt", "test_output.csv");
-    EXPECT_EQ(parser.GetWordFrequency(), 0);
+    try {
+        parser->parseAndWrite();
+    } catch (const std::runtime_error& e) {
+        FAIL() << "Unexpected exception: " << e.what();
+    }
 
     std::ifstream outputFile("test_output.csv");
     ASSERT_TRUE(outputFile.is_open());
 
-    std::string line;
-    std::getline(outputFile, line);
-    EXPECT_EQ(line, "Word,Frequency,Frequency(%)");
-    std::getline(outputFile, line);
-    EXPECT_EQ(line, "1,1,12.5");
-    std::getline(outputFile, line);
-    EXPECT_EQ(line, "111,1,12.5");
-    std::getline(outputFile, line);
-    EXPECT_EQ(line, "a,1,12.5");
-    std::getline(outputFile, line);
-    EXPECT_EQ(line, "b,1,12.5");
-    std::getline(outputFile, line);
-    EXPECT_EQ(line, "c,1,12.5");
-    std::getline(outputFile, line);
-    EXPECT_EQ(line, "x,1,12.5");
-    std::getline(outputFile, line);
-    EXPECT_EQ(line, "y,1,12.5");
-    std::getline(outputFile, line);
-    EXPECT_EQ(line, "z,1,12.5");
-    EXPECT_FALSE(std::getline(outputFile, line));
+    std::string expect = "Word,Frequency,Frequency(%)\n"
+    "1,1,12.5\n"
+    "111,1,12.5\n"
+    "a,1,12.5\n"
+    "b,1,12.5\n"
+    "c,1,12.5\n"
+    "x,1,12.5\n"
+    "y,1,12.5\n"
+    "z,1,12.5\n";
+    EXPECT_EQ(expect, read_file(std::move(outputFile)));
 
     outputFile.close();
 }
@@ -141,74 +151,76 @@ TEST_F(FPTestFixture, DifferentSeparators) {
         << "I:guess(everything)is^going}to_kill{you~one`day!";
     inputFile.close();
 
-    FrequencyParser parser("test_input.txt", "test_output.csv");
-    EXPECT_EQ(parser.GetWordFrequency(), 0);
+    try {
+        parser->parseAndWrite();
+    } catch (const std::runtime_error& e) {
+        FAIL() << "Unexpected exception: " << e.what();
+    }
 
     std::ifstream outputFile("test_output.csv");
     ASSERT_TRUE(outputFile.is_open());
 
-    std::string line;
-    std::getline(outputFile, line);
-    EXPECT_EQ(line, "Word,Frequency,Frequency(%)");
-    std::getline(outputFile, line);
-    EXPECT_EQ(line, "you,3,9.67742");
-    std::getline(outputFile, line);
-    EXPECT_EQ(line, "bittersweet,2,6.45161");
-    std::getline(outputFile, line);
-    EXPECT_EQ(line, "know,2,6.45161");
-    std::getline(outputFile, line);
-    EXPECT_EQ(line, "say,2,6.45161");
-    std::getline(outputFile, line);
-    EXPECT_EQ(line, "they,2,6.45161");
-    std::getline(outputFile, line);
-    EXPECT_EQ(line, "we,2,6.45161");
-    std::getline(outputFile, line);
-    EXPECT_EQ(line, "what,2,6.45161");
-    std::getline(outputFile, line);
-    EXPECT_EQ(line, "always,1,3.22581");
-    std::getline(outputFile, line);
-    EXPECT_EQ(line, "and,1,3.22581");
-    std::getline(outputFile, line);
-    EXPECT_EQ(line, "day,1,3.22581");
-    std::getline(outputFile, line);
-    EXPECT_EQ(line, "everything,1,3.22581");
-    std::getline(outputFile, line);
-    EXPECT_EQ(line, "fade,1,3.22581");
-    std::getline(outputFile, line);
-    EXPECT_EQ(line, "going,1,3.22581");
-    std::getline(outputFile, line);
-    EXPECT_EQ(line, "guess,1,3.22581");
-    std::getline(outputFile, line);
-    EXPECT_EQ(line, "i,1,3.22581");
-    std::getline(outputFile, line);
-    EXPECT_EQ(line, "is,1,3.22581");
-    std::getline(outputFile, line);
-    EXPECT_EQ(line, "its,1,3.22581");
-    std::getline(outputFile, line);
-    EXPECT_EQ(line, "kill,1,3.22581");
-    std::getline(outputFile, line);
-    EXPECT_EQ(line, "one,1,3.22581");
-    std::getline(outputFile, line);
-    EXPECT_EQ(line, "shine,1,3.22581");
-    std::getline(outputFile, line);
-    EXPECT_EQ(line, "the,1,3.22581");
-    std::getline(outputFile, line);
-    EXPECT_EQ(line, "to,1,3.22581");
-    std::getline(outputFile, line);
-    EXPECT_EQ(line, "way,1,3.22581");
-    EXPECT_FALSE(std::getline(outputFile, line));
+    std::string expect = "Word,Frequency,Frequency(%)\n"
+    "you,3,9.67742\n"
+    "bittersweet,2,6.45161\n"
+    "know,2,6.45161\n"
+    "say,2,6.45161\n"
+    "they,2,6.45161\n"
+    "we,2,6.45161\n"
+    "what,2,6.45161\n"
+    "always,1,3.22581\n"
+    "and,1,3.22581\n"
+    "day,1,3.22581\n"
+    "everything,1,3.22581\n"
+    "fade,1,3.22581\n"
+    "going,1,3.22581\n"
+    "guess,1,3.22581\n"
+    "i,1,3.22581\n"
+    "is,1,3.22581\n"
+    "its,1,3.22581\n"
+    "kill,1,3.22581\n"
+    "one,1,3.22581\n"
+    "shine,1,3.22581\n"
+    "the,1,3.22581\n"
+    "to,1,3.22581\n"
+    "way,1,3.22581\n";
+    EXPECT_EQ(expect, read_file(std::move(outputFile)));
 
     outputFile.close();
 }
 
-TEST_F(FPTestFixture, NonExistentInputFile) {
-    FrequencyParser parser("fake_test_input.txt", "test_output.csv");
-    EXPECT_NE(parser.GetWordFrequency(), 0);
+TEST(FPTestExceptions, NonExistentInputFile) {
+    std::ofstream inputFile("test_input.txt");
+    inputFile.close();
+    remove("test_output.csv");
+    const auto input_reader = new Reader("fake_test_input.txt");
+    const auto output_writer = new CSVWriter("test_output.csv");
+    auto parser = FrequencyParser(input_reader, output_writer);
+
+    try {
+        parser.parseAndWrite();
+        FAIL() << "Expected runtime error to be thrown";
+    } catch (const std::runtime_error& e) {}
+
+    remove("test_input.txt");
+    remove("test_output.csv");
 }
 
-TEST_F(FPTestFixture, FileWriteError) {
-    FrequencyParser parser("test_input.txt", "/test_output.csv");
-    EXPECT_NE(parser.GetWordFrequency(), 0);
+TEST(FPTestExceptions, FileWriteError) {
+    std::ofstream inputFile("test_input.txt");
+    inputFile.close();
+    remove("test_output.csv");
+    const auto input_reader = new Reader("test_input.txt");
+    const auto output_writer = new CSVWriter("/test_output.csv");
+    auto parser = FrequencyParser(input_reader, output_writer);
+
+    try {
+        parser.parseAndWrite();
+        FAIL() << "Expected runtime error to be thrown";
+    } catch (const std::runtime_error& e) {}
+
+    remove("test_input.txt");
+    remove("test_output.csv");
 }
 
 int main(int argc, char **argv) {

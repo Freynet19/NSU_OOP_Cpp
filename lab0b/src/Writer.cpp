@@ -1,17 +1,18 @@
-#include "./include/Writer.h"
+#include "Writer.h"
 
 #include <iostream>
 #include <fstream>
 #include <filesystem>
 
-int Writer::writeCSV(const std::string& outputFile,
-                     std::vector<std::pair<std::string, int>> const& wordList,
-                     const int wordsCount) {
+CSVWriter::CSVWriter(const char* outputCSV): outputFile(outputCSV) {}
+
+void CSVWriter::writeCSV(
+    std::vector<std::pair<std::string, int>> const& wordList,
+    const int wordsCount) const {
     std::ofstream fileOut(outputFile);
     if (!fileOut.is_open()) {
-        std::cerr << "Error opening output file: "
-        << std::filesystem::absolute(outputFile).string() << std::endl;
-        return 1;
+        throw std::runtime_error("Error opening output file: " +
+            std::filesystem::absolute(outputFile).string());
     }
 
     fileOut << "Word,Frequency,Frequency(%)" << std::endl;
@@ -25,5 +26,4 @@ int Writer::writeCSV(const std::string& outputFile,
     << std::filesystem::absolute(outputFile).string() << std::endl;
 
     fileOut.close();
-    return 0;
 }

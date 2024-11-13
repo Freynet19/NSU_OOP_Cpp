@@ -4,15 +4,17 @@
 #include <string>
 #include <vector>
 #include <utility>
+#include "Reader.h"
+#include "Writer.h"
 
 class FrequencyParser {
  public:
-    FrequencyParser(const std::string& inputTXT, const std::string& outputCSV);
-    int GetWordFrequency();
+    FrequencyParser(const Reader* input_reader, const CSVWriter* output_writer);
+    void parseAndWrite();
 
  private:
-    std::string inputFile;
-    std::string outputFile;
+    Reader reader;
+    CSVWriter writer;
     std::vector<std::pair<std::string, int>> sortedList;
     int wordsCount = 0;
 };

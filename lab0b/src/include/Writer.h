@@ -5,10 +5,13 @@
 #include <vector>
 #include <utility>
 
-class Writer {
+class CSVWriter {
  public:
-    static int writeCSV(const std::string& outputFile,
-      const std::vector<std::pair<std::string, int>>& wordList, int wordsCount);
+    explicit CSVWriter(const char* outputCSV);
+    void writeCSV(const std::vector<std::pair<std::string, int>>& wordList,
+        int wordsCount) const;
+ private:
+    std::string outputFile;
 };
 
 #endif  // LAB0B_SRC_INCLUDE_WRITER_H_

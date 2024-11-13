@@ -6,10 +6,12 @@
 
 class Reader {
  public:
-    int readTXT(const std::string& inputFile);
+    explicit Reader(const char* inputTXT);
+    void readTXT();
     [[nodiscard]] std::map<std::string, int> getWordMap() const;
 
  private:
+    std::string inputFile;
     std::map<std::string, int> wordFrequencyMap;
 };
 
