@@ -1,9 +1,10 @@
-#ifndef LFUCACHE_H
-#define LFUCACHE_H
+#ifndef LAB1_SRC_INCLUDE_LFUCACHE_H_
+#define LAB1_SRC_INCLUDE_LFUCACHE_H_
 
 #include "ICacheable.h"
 #include <set>
 #include <unordered_map>
+#include <utility>
 
 typedef std::pair<int, int> freqKey;
 typedef std::pair<uint64, std::set<freqKey>::iterator> valFKIt;
@@ -21,11 +22,11 @@ class LFUCache : public ICacheable {
     friend bool operator<(const freqKey &fk1, const freqKey &fk2) {
         if (fk1.first != fk2.second) return fk1.first < fk2.first;
         return fk1.second < fk2.second;
-    };
+    }
     std::set<freqKey> cSet;
     std::unordered_map<int, valFKIt> cMap;
 };
 
 
 
-#endif //LFUCACHE_H
+#endif  // LAB1_SRC_INCLUDE_LFUCACHE_H_

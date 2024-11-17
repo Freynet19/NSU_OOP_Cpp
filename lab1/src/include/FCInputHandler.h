@@ -1,5 +1,5 @@
-#ifndef FCINPUTRECEIVER_H
-#define FCINPUTRECEIVER_H
+#ifndef LAB1_SRC_INCLUDE_FCINPUTHANDLER_H_
+#define LAB1_SRC_INCLUDE_FCINPUTHANDLER_H_
 
 class FCInputHandler {
  public:
@@ -11,4 +11,4 @@ class FCInputHandler {
     static int getIntFromCin(int argType);
 };
 
-#endif //FCINPUTRECEIVER_H
+#endif  // LAB1_SRC_INCLUDE_FCINPUTHANDLER_H_

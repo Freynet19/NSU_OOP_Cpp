@@ -1,7 +1,8 @@
-#ifndef ICACHEABLE_H
-#define ICACHEABLE_H
+#ifndef LAB1_SRC_INCLUDE_ICACHEABLE_H_
+#define LAB1_SRC_INCLUDE_ICACHEABLE_H_
+#include <cstdint>
 
-typedef unsigned long long uint64;
+typedef uint64_t uint64;
 
 class ICacheable {
  public:
@@ -10,4 +11,4 @@ class ICacheable {
     virtual ~ICacheable() = default;
 };
 
-#endif //ICACHEABLE_H
+#endif  // LAB1_SRC_INCLUDE_ICACHEABLE_H_

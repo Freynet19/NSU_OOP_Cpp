@@ -25,8 +25,9 @@ void FibonacciCached::getAndPrintFib(int n) const {
         value = calcFib(n);
         cache->put(n, value);
         std::cout << "Calculated value: \t";
+    } else {
+        std::cout << "Value found in cache:\t";
     }
-    else std::cout << "Value found in cache:\t";
     std::cout << value << std::endl;
 }
 

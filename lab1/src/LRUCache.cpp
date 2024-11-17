@@ -23,7 +23,9 @@ void LRUCache::put(int key, uint64 value) {
             cMap.erase(cList.back().first);
             cList.pop_back();
         }
-    } else cList.erase(cMap[key]);
+    } else {
+        cList.erase(cMap[key]);
+    }
 
     cList.emplace_front(key, value);
     cMap[key] = cList.begin();

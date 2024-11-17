@@ -1,5 +1,5 @@
-#ifndef FIBONACCI_H
-#define FIBONACCI_H
+#ifndef LAB1_SRC_INCLUDE_FIBONACCICACHED_H_
+#define LAB1_SRC_INCLUDE_FIBONACCICACHED_H_
 #include "ICacheable.h"
 
 class FibonacciCached {
@@ -19,4 +19,4 @@ class FibonacciCached {
     FibonacciCached& operator=(FibonacciCached&&) noexcept;
 };
 
-#endif //FIBONACCI_H
+#endif  // LAB1_SRC_INCLUDE_FIBONACCICACHED_H_

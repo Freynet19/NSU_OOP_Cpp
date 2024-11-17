@@ -67,14 +67,14 @@ int FCInputHandler::getIntFromCin(int argType) {
 
     bool isValid;
     switch (argType) {
-        case 1: // cache type
-            isValid = 0 <= value and value <= 2;
+        case 1:  // cache type
+            isValid = 0 <= value && value <= 2;
             break;
-        case 2: // fib number
-            isValid = 0 <= value and value <= 93;
+        case 2:  // fib number
+            isValid = 0 <= value && value <= 93;
             break;
-        default: // cache capacity
-            isValid = 0 <= value and value <= 1000;
+        default:  // cache capacity
+            isValid = 0 <= value && value <= 1000;
             break;
     }
 

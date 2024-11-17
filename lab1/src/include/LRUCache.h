@@ -1,9 +1,10 @@
-#ifndef _LRU_CACHE_H_
-#define _LRU_CACHE_H_
+#ifndef LAB1_SRC_INCLUDE_LRUCACHE_H_
+#define LAB1_SRC_INCLUDE_LRUCACHE_H_
 
 #include "ICacheable.h"
 #include <list>
 #include <unordered_map>
+#include <utility>
 
 class LRUCache : public ICacheable {
  public:
@@ -18,4 +19,4 @@ class LRUCache : public ICacheable {
     std::unordered_map<int, std::list<std::pair<int, uint64>>::iterator> cMap;
 };
 
-#endif // _LRU_CACHE_H_
+#endif  // LAB1_SRC_INCLUDE_LRUCACHE_H_
