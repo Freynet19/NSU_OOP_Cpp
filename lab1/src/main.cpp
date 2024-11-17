@@ -11,7 +11,7 @@ int main() {
         if (!type) break;
         FibonacciCached fc(cap, type);
         while (true) {
-            const int arg = FCInputHandler::getArgument();
+            const int arg = FCInputHandler::getFibArgument();
             if (!arg) break;
             fc.getAndPrintFib(arg);
         }

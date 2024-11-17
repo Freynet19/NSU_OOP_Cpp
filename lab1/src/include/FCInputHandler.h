@@ -5,7 +5,10 @@ class FCInputHandler {
  public:
     static int getCacheCapacity();
     static int getCacheType();
-    static int getArgument();
+    static int getFibArgument();
+
+ private:
+    static int getIntFromCin(int argType);
 };
 
 #endif //FCINPUTRECEIVER_H
