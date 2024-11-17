@@ -7,7 +7,8 @@ int FCInputHandler::getCacheCapacity() {
         try {
             std::cout << "Please enter the cache capacity" << std::endl;
             std::cout << "0 - exit program, "
-                "any number above - number of elements in cache:" << std::endl;
+                "any number in [1, 1000] - number of elements in cache:" <<
+                std::endl;
             const int input = getIntFromCin(0);
             return input;
         } catch (const std::invalid_argument& e) {
@@ -55,27 +56,30 @@ int FCInputHandler::getIntFromCin(int argType) {
     if (std::cin.fail()) {
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        throw std::invalid_argument("Invalid input! Try again.");
+        throw std::invalid_argument("Invalid input (non-number)! Try again.");
     }
 
     // удалось обработать, но остался мусор
     if (std::cin.peek() != '\n' && std::cin.peek() != EOF) {
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        throw std::invalid_argument("Invalid input! Try again.");
+        throw std::invalid_argument("Invalid input (non-number)! Try again.");
     }
 
-    bool isValid = !std::cin.fail() and value >= 0;
+    bool isValid;
     switch (argType) {
         case 1: // cache type
-            isValid = isValid and value <= 2;
+            isValid = 0 <= value and value <= 2;
             break;
         case 2: // fib number
-            isValid = isValid and value <= 93;
+            isValid = 0 <= value and value <= 93;
             break;
-        default: break; // cache capacity
+        default: // cache capacity
+            isValid = 0 <= value and value <= 1000;
+            break;
     }
 
-    if (!isValid) throw std::invalid_argument("Invalid input! Try again.");
+    if (!isValid) throw std::invalid_argument(
+        "Invalid input (invalid number)! Try again.");
 
     return value;
 }

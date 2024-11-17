@@ -31,7 +31,7 @@ void FibonacciCached::getAndPrintFib(int n) const {
 }
 
 uint64 FibonacciCached::calcFib(int n) {
-    // n > 0 always
+    // n is in [1, 93] always
     if (n <= 2) return 1;
     /*uint64 pr2 = 1, pr1 = 1, cur = 2;
     for (int i = 3; i <= n; i++) {
@@ -43,6 +43,3 @@ uint64 FibonacciCached::calcFib(int n) {
     return calcFib(n - 1) + calcFib(n - 2);
     // чтобы была более заметна разница по времени в сравнении с кэшем
 }
-
-
-
