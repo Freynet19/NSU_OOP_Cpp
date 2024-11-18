@@ -16,7 +16,7 @@ class FrequencyParser {
  private:
     Reader reader;
     CSVWriter writer;
-    std::vector<std::pair<std::string, int>> sortedList;
+    std::vector<std::pair<std::string, int>> sortedList; // multiset
     int wordsCount = 0;
 };
 

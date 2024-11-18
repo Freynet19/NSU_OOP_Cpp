@@ -6,13 +6,13 @@
 
 int main(int argc, char* argv[]) {
     try {
-        FrequencyParser::validateArgs(argc, argv);
+        FrequencyParser::validateArgs(argc, argv);  // отдельный класс
     } catch (const std::invalid_argument& e) {
         std::cerr << e.what() << std::endl;
         return 0;
     }
 
-    const auto input_reader = new Reader(argv[1]);
+    const auto input_reader = new Reader(argv[1]); // unique_ptr + запихать в try
     const auto output_writer = new CSVWriter(argv[2]);
     auto parser = FrequencyParser(input_reader, output_writer);
 
