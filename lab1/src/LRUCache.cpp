@@ -4,11 +4,9 @@ LRUCache::LRUCache(int cap): capacity(cap) {}
 
 uint64 LRUCache::get(int key) {
     if (cMap.find(key) != cMap.end()) {
-        auto it = cMap[key];
-        const uint64 value = it->second;
-        cList.splice(cList.begin(), cList, it);
+        cList.splice(cList.begin(), cList, cMap[key]);
         cMap[key] = cList.begin();
-        return value;
+        return cMap[key]->second;
     }
     return 0;
 }

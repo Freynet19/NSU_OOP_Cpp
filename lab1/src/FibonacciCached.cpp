@@ -6,16 +6,14 @@
 FibonacciCached::FibonacciCached(int cap, int type) {
     if (type == 1) {
         useLFU = false;
-        cache = new LRUCache(cap);
+        cache = std::make_unique<LRUCache>(LRUCache(cap));
         std::cout << "Using LRU cache..." << std::endl;
     } else {
         useLFU = true;
-        cache = new LFUCache(cap);
+        cache = std::make_unique<LFUCache>(LFUCache(cap));
         std::cout << "Using LFU cache..." << std::endl;
     }
 }
-
-FibonacciCached::~FibonacciCached() { delete cache; }
 
 void FibonacciCached::getAndPrintFib(int n) const {
     uint64 value = cache->get(n);
@@ -24,9 +22,9 @@ void FibonacciCached::getAndPrintFib(int n) const {
             << std::endl;
         value = calcFib(n);
         cache->put(n, value);
-        std::cout << "Calculated value: \t";
+        std::cout << "Calculated value:\t  ";
     } else {
-        std::cout << "Value found in cache:\t";
+        std::cout << "Value found in cache: ";
     }
     std::cout << value << std::endl;
 }
@@ -34,13 +32,5 @@ void FibonacciCached::getAndPrintFib(int n) const {
 uint64 FibonacciCached::calcFib(int n) {
     // n is in [1, 93] always
     if (n <= 2) return 1;
-    /*uint64 pr2 = 1, pr1 = 1, cur = 2;
-    for (int i = 3; i <= n; i++) {
-        cur = pr1 + pr2;
-        pr2 = pr1;
-        pr1 = cur;
-    }
-    return cur;*/
     return calcFib(n - 1) + calcFib(n - 2);
-    // чтобы была более заметна разница по времени в сравнении с кэшем
 }

@@ -1,5 +1,6 @@
 #ifndef LAB1_SRC_INCLUDE_ICACHEABLE_H_
 #define LAB1_SRC_INCLUDE_ICACHEABLE_H_
+
 #include <cstdint>
 
 typedef uint64_t uint64;

@@ -50,15 +50,15 @@ TEST(FibCachedTests, SimpleTest) {
 
     FibonacciCached fc(2, 1);
     fc.getAndPrintFib(20);
-    EXPECT_EQ("Calculated value: \t6765", findLastLine(stdoutBuf.str()));
+    EXPECT_EQ("Calculated value:\t  6765", findLastLine(stdoutBuf.str()));
     fc.getAndPrintFib(5);
-    EXPECT_EQ("Calculated value: \t5", findLastLine(stdoutBuf.str()));
+    EXPECT_EQ("Calculated value:\t  5", findLastLine(stdoutBuf.str()));
     fc.getAndPrintFib(20);
-    EXPECT_EQ("Value found in cache:\t6765", findLastLine(stdoutBuf.str()));
+    EXPECT_EQ("Value found in cache: 6765", findLastLine(stdoutBuf.str()));
     fc.getAndPrintFib(4);
-    EXPECT_EQ("Calculated value: \t3", findLastLine(stdoutBuf.str()));
+    EXPECT_EQ("Calculated value:\t  3", findLastLine(stdoutBuf.str()));
     fc.getAndPrintFib(5);
-    EXPECT_EQ("Calculated value: \t5", findLastLine(stdoutBuf.str()));
+    EXPECT_EQ("Calculated value:\t  5", findLastLine(stdoutBuf.str()));
 
     std::cout.rdbuf(oldBuffer);
 }

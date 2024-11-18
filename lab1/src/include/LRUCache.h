@@ -16,7 +16,9 @@ class LRUCache : public ICacheable {
  private:
     int capacity;
     std::list<std::pair<int, uint64>> cList;
+    // list of pair<key, value> (tracking Least Recent elements)
     std::unordered_map<int, std::list<std::pair<int, uint64>>::iterator> cMap;
+    // umap<key, iteratorToList> (access key->element)
 };
 
 #endif  // LAB1_SRC_INCLUDE_LRUCACHE_H_

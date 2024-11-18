@@ -7,8 +7,10 @@
 #include <utility>
 
 typedef std::pair<int, int> freqKey;
+// pair<frequency, key> to be in set (tracking Least Frequent elements)
+
 typedef std::pair<uint64, std::set<freqKey>::iterator> valFKIt;
-// value + FK iterator
+// pair<value, iteratorToSet> to be in umap (access key->element)
 
 class LFUCache : public ICacheable {
  public:
@@ -24,7 +26,7 @@ class LFUCache : public ICacheable {
         return fk1.second < fk2.second;
     }
     std::set<freqKey> cSet;
-    std::unordered_map<int, valFKIt> cMap;
+    std::unordered_map<int, valFKIt> cMap;  // umap<key, pair>
 };
 
 
