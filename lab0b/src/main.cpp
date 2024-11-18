@@ -6,14 +6,10 @@
 
 int main(int argc, char* argv[]) {
     try {
-        if (argc != 3) {
-            throw std::invalid_argument("Error: got " +
-                std::to_string(argc-1) +
-                " arguments, expected 2\nUsage: " +
-                argv[0] + " input.txt output.csv");
-        }
-    } catch (const std::exception& e) {
+        FrequencyParser::validateArgs(argc, argv);
+    } catch (const std::invalid_argument& e) {
         std::cerr << e.what() << std::endl;
+        return 0;
     }
 
     const auto input_reader = new Reader(argv[1]);

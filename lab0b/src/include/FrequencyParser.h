@@ -11,6 +11,7 @@ class FrequencyParser {
  public:
     FrequencyParser(const Reader* input_reader, const CSVWriter* output_writer);
     void parseAndWrite();
+    static void validateArgs(int argc, char* argv[]);
 
  private:
     Reader reader;
