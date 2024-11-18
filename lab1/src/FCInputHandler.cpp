@@ -9,9 +9,9 @@ int FCInputHandler::getCacheCapacity() {
             std::cout << "0 - exit program, "
                 "any number in [1, 1000] - number of elements in cache:" <<
                 std::endl;
-            const int input = getIntFromCin(0);
+            const int input = getIntFromCin(0);  // add enum
             return input;
-        } catch (const std::invalid_argument& e) {
+        } catch (const std::invalid_argument& e) {  // add custom exception
             std::cin.clear();
             std::cout << e.what() << std::endl;
         }
@@ -62,8 +62,8 @@ int FCInputHandler::getIntFromCin(int argType) {
     // удалось обработать, но остался мусор
     if (std::cin.peek() != '\n' && std::cin.peek() != EOF) {
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        throw std::invalid_argument("Invalid input (non-number)! Try again.");
-    }
+        throw std::invalid_argument("invalid input (non-number)! Try again.");
+    } // ошибки с маленькой буквы
 
     bool isValid;
     switch (argType) {
@@ -74,7 +74,7 @@ int FCInputHandler::getIntFromCin(int argType) {
             isValid = 0 <= value && value <= 93;
             break;
         default:  // cache capacity
-            isValid = 0 <= value && value <= 1000;
+            isValid = 0 <= value && value <= 1000; // объяснить константы в классе
             break;
     }
 
