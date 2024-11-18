@@ -1,7 +1,6 @@
 #include <gtest/gtest.h>
 #include "FrequencyParser.h"
 #include <fstream>
-#include <valarray>
 
 std::string read_file(std::ifstream file) {
     std::stringstream buffer;
