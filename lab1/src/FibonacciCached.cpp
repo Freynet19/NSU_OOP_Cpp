@@ -1,15 +1,15 @@
 #include "FibonacciCached.h"
+
 #include "LRUCache.h"
 #include "LFUCache.h"
 #include <iostream>
 
-FibonacciCached::FibonacciCached(int cap, int type) {
-    if (type == 1) {
-        useLFU = false;
+FibonacciCached::FibonacciCached(int cap, FibCacheType cacheType) {
+    type = cacheType;
+    if (type == FibCacheType::LRU) {
         cache = std::make_unique<LRUCache>(LRUCache(cap));
         std::cout << "Using LRU cache..." << std::endl;
-    } else {
-        useLFU = true;
+    } else if (type == FibCacheType::LFU) {
         cache = std::make_unique<LFUCache>(LFUCache(cap));
         std::cout << "Using LFU cache..." << std::endl;
     }
@@ -18,8 +18,7 @@ FibonacciCached::FibonacciCached(int cap, int type) {
 void FibonacciCached::getAndPrintFib(int n) const {
     uint64 value = cache->get(n);
     if (value == 0) {
-        std::cout << "Value not found in cache. Calculating..."
-            << std::endl;
+        std::cout << "Value not found in cache. Calculating..." << std::endl;
         value = calcFib(n);
         cache->put(n, value);
         std::cout << "Calculated value:\t  ";

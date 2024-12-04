@@ -6,13 +6,13 @@ int main() {
     std::cout << "Welcome to LRU/LFU-cached Fibonacci Calculator!" << std::endl;
     while (true) {
         const int cap = FCInputHandler::getCacheCapacity();
-        if (!cap) break;
-        const int type = FCInputHandler::getCacheType();
-        if (!type) break;
+        if (cap == 0) break;
+        const FibCacheType type = FCInputHandler::getCacheType();
+        if (type == FibCacheType::EXIT) break;
         FibonacciCached fc(cap, type);
         while (true) {
             const int arg = FCInputHandler::getFibArgument();
-            if (!arg) break;
+            if (arg == 0) break;
             fc.getAndPrintFib(arg);
         }
     }

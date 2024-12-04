@@ -1,4 +1,6 @@
 #include "FCInputHandler.h"
+
+#include <FibonacciCached.h>
 #include <iostream>
 #include <limits>
 
@@ -9,8 +11,7 @@ int FCInputHandler::getCacheCapacity() {
             std::cout << "0 - exit program, "
                 "any number in [1, 1000] - number of elements in cache:" <<
                 std::endl;
-            const int input = getIntFromCin(FCInputType::CACHE_CAPACITY);
-            return input;
+            return getIntFromCin(FCInputType::CACHE_CAPACITY);
         } catch (const std::invalid_argument& e) {  // add custom exception
             std::cin.clear();
             std::cout << e.what() << std::endl;
@@ -18,13 +19,13 @@ int FCInputHandler::getCacheCapacity() {
     }
 }
 
-int FCInputHandler::getCacheType() {
+FibCacheType FCInputHandler::getCacheType() {
     while (true) {
         try {
             std::cout << "Please select the caching method" << std::endl;
             std::cout << "1 - LRU, 2 - LFU, 0 - exit program:" << std::endl;
-            const int input = getIntFromCin(FCInputType::CACHE_TYPE);
-            return input;
+            return static_cast<FibCacheType>(
+                getIntFromCin(FCInputType::CACHE_TYPE));
         } catch (const std::invalid_argument& e) {
             std::cin.clear();
             std::cout << e.what() << std::endl;
@@ -39,8 +40,7 @@ int FCInputHandler::getFibArgument() {
             std::cout << "0 - exit to main menu, "
                 "any number in [1, 93] - number in the Fibonacci sequence:"
                 << std::endl;
-            const int input = getIntFromCin(FCInputType::FIB_NUMBER);
-            return input;
+            return getIntFromCin(FCInputType::FIB_NUMBER);
         } catch (const std::invalid_argument& e) {
             std::cin.clear();
             std::cout << e.what() << std::endl;
@@ -68,13 +68,13 @@ int FCInputHandler::getIntFromCin(FCInputType argType) {
     bool isValid = false;
     switch (argType) {
     case FCInputType::CACHE_CAPACITY:
-        isValid = 0 <= value && value <= maxCapValue; // объяснить константы в классе
+        isValid = minValue <= value && value <= maxCapValue;
         break;
     case FCInputType::CACHE_TYPE:
-        isValid = 0 <= value && value <= maxTypeValue;
+        isValid = minValue <= value && value <= maxTypeValue;
         break;
     case FCInputType::FIB_NUMBER:
-        isValid = 0 <= value && value <= maxFibValue;
+        isValid = minValue <= value && value <= maxFibValue;
         break;
     }
 
