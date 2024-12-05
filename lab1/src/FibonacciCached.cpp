@@ -4,12 +4,12 @@
 #include "LFUCache.h"
 #include <iostream>
 
-FibonacciCached::FibonacciCached(int cap, FibCacheType cacheType) {
+FibonacciCached::FibonacciCached(int cap, СacheType cacheType) {
     type = cacheType;
-    if (type == FibCacheType::LRU) {
+    if (type == СacheType::LRU) {
         cache = std::make_unique<LRUCache>(LRUCache(cap));
         std::cout << "Using LRU cache..." << std::endl;
-    } else if (type == FibCacheType::LFU) {
+    } else if (type == СacheType::LFU) {
         cache = std::make_unique<LFUCache>(LFUCache(cap));
         std::cout << "Using LFU cache..." << std::endl;
     }

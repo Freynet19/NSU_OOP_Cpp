@@ -48,7 +48,7 @@ TEST(FibCachedTests, SimpleTest) {
     std::stringstream stdoutBuf;
     std::streambuf* oldBuffer = std::cout.rdbuf(stdoutBuf.rdbuf());
 
-    FibonacciCached fc(2, FibCacheType::LRU);
+    FibonacciCached fc(2, СacheType::LRU);
     fc.getAndPrintFib(20);
     EXPECT_EQ("Calculated value:\t  6765", findLastLine(stdoutBuf.str()));
     fc.getAndPrintFib(5);

@@ -13,6 +13,7 @@ set(SRC
         src/FibonacciCached.cpp
         src/LRUCache.cpp
         src/LFUCache.cpp
+        src/InputValidators.cpp
 )
 
 set(INCLUDE_DIRS

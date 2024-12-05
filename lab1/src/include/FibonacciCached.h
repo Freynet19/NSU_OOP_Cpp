@@ -4,16 +4,16 @@
 #include "ICacheable.h"
 #include <memory>
 
-enum class FibCacheType { EXIT = 0, LRU = 1, LFU = 2 };
+enum class СacheType { EXIT = 0, LRU = 1, LFU = 2 };
 
 class FibonacciCached {
  public:
-    explicit FibonacciCached(int cap, FibCacheType type);
+    explicit FibonacciCached(int cap, СacheType type);
     void getAndPrintFib(int n) const;
 
  private:
     std::unique_ptr<ICacheable> cache;
-    FibCacheType type;
+    СacheType type;
     static uint64 calcFib(int n);
 };
 

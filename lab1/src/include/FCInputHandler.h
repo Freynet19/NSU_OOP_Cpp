@@ -2,22 +2,17 @@
 #define LAB1_SRC_INCLUDE_FCINPUTHANDLER_H_
 
 #include "FibonacciCached.h"
-
-enum class FCInputType { CACHE_CAPACITY, CACHE_TYPE, FIB_NUMBER };
+#include "InputValidators.h"
 
 class FCInputHandler {
  public:
     static int getCacheCapacity();
-    static FibCacheType getCacheType();
+    static СacheType getCacheType();
     static int getFibArgument();
     FCInputHandler() = delete;
 
  private:
-    static int getIntFromCin(FCInputType argType);
-    constexpr static int minValue = 0;
-    constexpr static int maxCapValue = 1000;
-    constexpr static int maxTypeValue = 2;
-    constexpr static int maxFibValue = 93;
+    static int getIntFromCin(FCArgumentType argType);
 };
 
 #endif  // LAB1_SRC_INCLUDE_FCINPUTHANDLER_H_

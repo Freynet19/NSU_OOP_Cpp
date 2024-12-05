@@ -1,6 +1,8 @@
 #include "FCInputHandler.h"
 
-#include <FibonacciCached.h>
+#include "FibonacciCached.h"
+#include "InputValidators.h"
+#include "FCExceptions.h"
 #include <iostream>
 #include <limits>
 
@@ -11,23 +13,31 @@ int FCInputHandler::getCacheCapacity() {
             std::cout << "0 - exit program, "
                 "any number in [1, 1000] - number of elements in cache:" <<
                 std::endl;
-            return getIntFromCin(FCInputType::CACHE_CAPACITY);
-        } catch (const std::invalid_argument& e) {  // add custom exception
+            return getIntFromCin(FCArgumentType::CACHE_CAPACITY);
+        } catch (const InvalidCapacityArgumentException& e) {
             std::cin.clear();
+            std::cout << e.what() << std::endl;
+        } catch (const UnprocessableArgumentException& e) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cout << e.what() << std::endl;
         }
     }
 }
 
-FibCacheType FCInputHandler::getCacheType() {
+СacheType FCInputHandler::getCacheType() {
     while (true) {
         try {
             std::cout << "Please select the caching method" << std::endl;
             std::cout << "1 - LRU, 2 - LFU, 0 - exit program:" << std::endl;
-            return static_cast<FibCacheType>(
-                getIntFromCin(FCInputType::CACHE_TYPE));
-        } catch (const std::invalid_argument& e) {
+            return static_cast<СacheType>(
+                getIntFromCin(FCArgumentType::CACHE_TYPE));
+        } catch (const InvalidTypeArgumentException& e) {
             std::cin.clear();
+            std::cout << e.what() << std::endl;
+        } catch (const UnprocessableArgumentException& e) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cout << e.what() << std::endl;
         }
     }
@@ -40,46 +50,34 @@ int FCInputHandler::getFibArgument() {
             std::cout << "0 - exit to main menu, "
                 "any number in [1, 93] - number in the Fibonacci sequence:"
                 << std::endl;
-            return getIntFromCin(FCInputType::FIB_NUMBER);
-        } catch (const std::invalid_argument& e) {
+            return getIntFromCin(FCArgumentType::FIB_NUMBER);
+        } catch (const InvalidFibNumberArgumentException& e) {
             std::cin.clear();
+            std::cout << e.what() << std::endl;
+        } catch (const UnprocessableArgumentException& e) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cout << e.what() << std::endl;
         }
     }
 }
 
-int FCInputHandler::getIntFromCin(FCInputType argType) {
+int FCInputHandler::getIntFromCin(FCArgumentType argType) {
     int value;
     std::cin >> value;
 
-    // не удалось обработать сразу
     if (std::cin.fail()) {
-        std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        throw std::invalid_argument("invalid input (non-number)! Try again.");
+        throw UnprocessableArgumentException(
+            "invalid input: garbage at the beginning! Try again.");
     }
 
-    // удалось обработать, но остался мусор
     if (std::cin.peek() != '\n' && std::cin.peek() != EOF) {
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        throw std::invalid_argument("invalid input (non-number)! Try again.");
-    } // ошибки с маленькой буквы
-
-    bool isValid = false;
-    switch (argType) {
-    case FCInputType::CACHE_CAPACITY:
-        isValid = minValue <= value && value <= maxCapValue;
-        break;
-    case FCInputType::CACHE_TYPE:
-        isValid = minValue <= value && value <= maxTypeValue;
-        break;
-    case FCInputType::FIB_NUMBER:
-        isValid = minValue <= value && value <= maxFibValue;
-        break;
+        throw UnprocessableArgumentException(
+            "invalid input: garbage at the end! Try again.");
     }
 
-    if (!isValid) throw std::invalid_argument(
-        "Invalid input (invalid number)! Try again.");
+    InputValidator validator(value, argType);
+    validator.validate();
 
     return value;
 }

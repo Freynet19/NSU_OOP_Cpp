@@ -7,8 +7,8 @@ int main() {
     while (true) {
         const int cap = FCInputHandler::getCacheCapacity();
         if (cap == 0) break;
-        const FibCacheType type = FCInputHandler::getCacheType();
-        if (type == FibCacheType::EXIT) break;
+        const СacheType type = FCInputHandler::getCacheType();
+        if (type == СacheType::EXIT) break;
         FibonacciCached fc(cap, type);
         while (true) {
             const int arg = FCInputHandler::getFibArgument();
