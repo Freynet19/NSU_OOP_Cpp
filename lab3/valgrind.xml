@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+
+<valgrindoutput>
+
+<protocolversion>4</protocolversion>
+<protocoltool>memcheck</protocoltool>
+
+<preamble>
+  <line>Memcheck, a memory error detector</line>
+  <line>Copyright (C) 2002-2024, and GNU GPL'd, by Julian Seward et al.</line>
+  <line>Using Valgrind-3.24.0 and LibVEX; rerun with -h for copyright info</line>
+  <line>Command: /home/freynet/CLionProjects/NSU_OOP_Cpp/lab3/cmake-build-debug/test_lab3</line>
+</preamble>
+
+<pid>327727</pid>
+<ppid>300252</ppid>
+<tool>memcheck</tool>
+
+<args>
+  <vargv>
+    <exe>/usr/bin/valgrind</exe>
+    <arg>--tool=memcheck</arg>
+    <arg>--xml=yes</arg>
+    <arg>--xml-file=/tmp/clion-valgrind8a59a1a2-9028-4ab4-b008-dbea035cedbb/valgrind_output_%p</arg>
+    <arg>--gen-suppressions=all</arg>
+    <arg>--leak-check=full</arg>
+    <arg>--leak-resolution=med</arg>
+    <arg>--track-origins=yes</arg>
+    <arg>--vgdb=no</arg>
+  </vargv>
+  <argv>
+    <exe>/home/freynet/CLionProjects/NSU_OOP_Cpp/lab3/cmake-build-debug/test_lab3</exe>
+  </argv>
+</args>
+
+<status>
+  <state>RUNNING</state>
+  <time>00:00:00:06.509 </time>
+</status>
+
+
+<status>
+  <state>FINISHED</state>
+  <time>00:00:01:22.599 </time>
+</status>
+
+<errorcounts>
+</errorcounts>
+
+<suppcounts>
+</suppcounts>
+
+</valgrindoutput>
+
+
