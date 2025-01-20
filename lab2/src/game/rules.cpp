@@ -15,28 +15,24 @@ Rules::Rules(const std::string &ruleStr): ruleStr(ruleStr) {
     std::string bPart = ruleStr.substr(0, pos);
     std::string sPart = ruleStr.substr(pos + 1);
 
-    if (!bPart.empty() && bPart[0] == 'B') {
-        for (size_t i = 1; i < bPart.size(); ++i) {
-            if (isdigit(bPart[i])) {
-                birth.push_back(bPart[i] - '0');
-            } else {
-                throw ruleParsingException("Invalid birth rule: " + ruleStr);
-            }
-        }
-    } else {
+    if (bPart.empty() || bPart[0] != 'B') {
         throw ruleParsingException("Invalid rule format (no B): " + ruleStr);
     }
-
-    if (sPart.size() > 0 && sPart[0] == 'S') {
-        for (size_t i = 1; i < sPart.size(); ++i) {
-            if (isdigit(sPart[i])) {
-                survive.push_back(sPart[i] - '0');
-            } else {
-                throw ruleParsingException("Invalid survive rule: " + ruleStr);
-            }
+    for (size_t i = 1; i < bPart.size(); ++i) {
+        if (!isdigit(bPart[i])) {
+            throw ruleParsingException("Invalid birth rule: " + ruleStr);
         }
-    } else {
+        birth.push_back(bPart[i] - '0');
+    }
+
+    if (sPart.empty() || sPart[0] != 'S') {
         throw ruleParsingException("Invalid rule format (no S): " + ruleStr);
+    }
+    for (size_t i = 1; i < sPart.size(); ++i) {
+        if (!isdigit(sPart[i])) {
+            throw ruleParsingException("Invalid survive rule: " + ruleStr);
+        }
+        survive.push_back(sPart[i] - '0');
     }
 }
 

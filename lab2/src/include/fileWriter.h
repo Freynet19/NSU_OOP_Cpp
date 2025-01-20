@@ -6,7 +6,7 @@
 
 class fileWriter {
  public:
-    explicit fileWriter(const std::string& fname, Universe &u);
+    explicit fileWriter(std::string fname, Universe &u);
     void saveToFile() const;
  private:
     std::string filename;

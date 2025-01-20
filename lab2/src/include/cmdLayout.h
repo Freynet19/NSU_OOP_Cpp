@@ -43,6 +43,18 @@ class cmdLayout : public QHBoxLayout {
     QPushButton *saveToFileButton;
     QPushButton *helpButton;
     QPushButton *exitButton;
+
+    const QString helpText =
+       "Execute: compute n iterations with animation (default=1)\n\n"
+
+       "Load from File: load universe from file\n"
+       "Save to File: save universe to file\n\n"
+
+       "Tick Interval Slider: set animation speed\n"
+       "Toggle Theme: switch to light/dark theme\n\n"
+
+       "Help: print this help\n"
+       "Exit: quit the game\n";
 };
 
 

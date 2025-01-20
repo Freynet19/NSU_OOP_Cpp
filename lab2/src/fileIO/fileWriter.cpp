@@ -3,9 +3,10 @@
 #include <QFile>
 #include <QTextStream>
 #include <string>
+#include <utility>
 
-fileWriter::fileWriter(const std::string& fname, Universe& u)
-    : filename(fname), u(u) {}
+fileWriter::fileWriter(std::string fname, Universe& u)
+    : filename(std::move(fname)), u(u) {}
 
 void fileWriter::saveToFile() const {
     QString QFileName = QString::fromStdString(filename);
