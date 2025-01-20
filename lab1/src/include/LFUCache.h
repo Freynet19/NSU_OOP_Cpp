@@ -1,18 +1,18 @@
 #ifndef LAB1_SRC_INCLUDE_LFUCACHE_H_
 #define LAB1_SRC_INCLUDE_LFUCACHE_H_
 
-#include "ICacheable.h"
+#include "ICache.h"
 #include <set>
 #include <unordered_map>
 #include <utility>
 
-typedef std::pair<int, int> freqKey;
+using freqKey = std::pair<int, int>;
 // pair<frequency, key> to be in set (tracking Least Frequent elements)
 
-typedef std::pair<uint64, std::set<freqKey>::iterator> valFKIt;
+using valFKIt = std::pair<uint64, std::set<freqKey>::iterator>;
 // pair<value, iteratorToSet> to be in umap (access key->element)
 
-class LFUCache : public ICacheable {
+class LFUCache : public ICache {
  public:
     explicit LFUCache(int cap);
     uint64 get(int key) override;
@@ -28,7 +28,5 @@ class LFUCache : public ICacheable {
     std::set<freqKey> cSet;
     std::unordered_map<int, valFKIt> cMap;  // umap<key, pair>
 };
-
-
 
 #endif  // LAB1_SRC_INCLUDE_LFUCACHE_H_

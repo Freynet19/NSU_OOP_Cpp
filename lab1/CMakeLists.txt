@@ -18,6 +18,7 @@ set(SRC
 
 set(INCLUDE_DIRS
         src/include
+        src/include/exceptions
 )
 
 add_executable(${PROJECT_NAME} src/main.cpp ${SRC})

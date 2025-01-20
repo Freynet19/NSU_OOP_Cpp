@@ -6,15 +6,15 @@
 
 enum class FCArgumentType { CACHE_CAPACITY, CACHE_TYPE, FIB_NUMBER };
 
-class IValidator {
+class IntegerValidator {
  public:
     virtual void validate(int arg) = 0;
-    virtual ~IValidator() = default;
-    IValidator() = default;
-    IValidator(const IValidator&) = delete;
-    IValidator(IValidator&&) = delete;
-    IValidator& operator=(const IValidator&) = delete;
-    IValidator& operator=(IValidator&&) = delete;
+    virtual ~IntegerValidator() = default;
+    IntegerValidator() = default;
+    IntegerValidator(const IntegerValidator&) = delete;
+    IntegerValidator(IntegerValidator&&) = delete;
+    IntegerValidator& operator=(const IntegerValidator&) = delete;
+    IntegerValidator& operator=(IntegerValidator&&) = delete;
 
  protected:
     const char* belowMinExcMsg =
@@ -23,42 +23,43 @@ class IValidator {
         "argument is above maximum allowed value! Try again.";
 };
 
-class CacheCapacityValidator : public IValidator {
+class CacheCapacityValidator : public IntegerValidator {
  public:
     void validate(int arg) override;
 
  private:
-    int minValue = 0;
-    int maxValue = 1000;
+    static constexpr int minValue = 0;
+    static constexpr int maxValue = 1000;
 };
 
-class CacheTypeValidator : public IValidator {
+class CacheTypeValidator : public IntegerValidator {
  public:
     void validate(int arg) override;
 
  private:
-    int minValue = 0;
-    int maxValue = 2;
+    static constexpr int minValue = 0;
+    static constexpr int maxValue = 2;
 };
 
-class FibNumberValidator : public IValidator {
+class FibNumberValidator : public IntegerValidator {
  public:
     void validate(int arg) override;
 
  private:
-    int minValue = 0;
-    int maxValue = 93;
+    static constexpr int minValue = 0;
+    static constexpr int maxValue = 93;
+    // т.к. Fib(94) выходит за пределы uint64_t
 };
 
-class InputValidator {
+class ProgramArgumentsValidator {
  public:
-    InputValidator(int value, FCArgumentType type);
+    ProgramArgumentsValidator(int value, FCArgumentType type);
     void validate() const;
 
  private:
     int arg;
     FCArgumentType argType;
-    std::unique_ptr<IValidator> validator_;
+    std::unique_ptr<IntegerValidator> validator_;
 };
 
 #endif  // LAB1_SRC_INCLUDE_INPUTVALIDATORS_H_

@@ -1,8 +1,11 @@
 #include "FibonacciCached.h"
 
+#include <iostream>
+#include <memory>
 #include "LRUCache.h"
 #include "LFUCache.h"
-#include <iostream>
+
+#include "ValueNotFound.h"
 
 FibonacciCached::FibonacciCached(int cap, СacheType cacheType) {
     type = cacheType;
@@ -16,14 +19,15 @@ FibonacciCached::FibonacciCached(int cap, СacheType cacheType) {
 }
 
 void FibonacciCached::getAndPrintFib(int n) const {
-    uint64 value = cache->get(n);
-    if (value == 0) {
+    uint64 value;
+    try {
+        value = cache->get(n);
+        std::cout << "Value found in cache: ";
+    } catch (ValueNotFound&) {
         std::cout << "Value not found in cache. Calculating..." << std::endl;
         value = calcFib(n);
         cache->put(n, value);
         std::cout << "Calculated value:\t  ";
-    } else {
-        std::cout << "Value found in cache: ";
     }
     std::cout << value << std::endl;
 }

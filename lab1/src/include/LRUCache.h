@@ -1,12 +1,12 @@
 #ifndef LAB1_SRC_INCLUDE_LRUCACHE_H_
 #define LAB1_SRC_INCLUDE_LRUCACHE_H_
 
-#include "ICacheable.h"
+#include "ICache.h"
 #include <list>
 #include <unordered_map>
 #include <utility>
 
-class LRUCache : public ICacheable {
+class LRUCache : public ICache {
  public:
     explicit LRUCache(int cap);
     uint64 get(int key) override;

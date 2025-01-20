@@ -1,10 +1,14 @@
 #include "FCInputHandler.h"
 
-#include "FibonacciCached.h"
-#include "InputValidators.h"
-#include "FCExceptions.h"
 #include <iostream>
 #include <limits>
+#include "FibonacciCached.h"
+#include "InputValidators.h"
+
+#include "UnprocessableArg.h"
+#include "InvalidCapArg.h"
+#include "InvalidTypeArg.h"
+#include "InvalidFibArg.h"
 
 int FCInputHandler::getCacheCapacity() {
     while (true) {
@@ -76,7 +80,7 @@ int FCInputHandler::getIntFromCin(FCArgumentType argType) {
             "invalid input: garbage at the end! Try again.");
     }
 
-    InputValidator validator(value, argType);
+    ProgramArgumentsValidator validator(value, argType);
     validator.validate();
 
     return value;

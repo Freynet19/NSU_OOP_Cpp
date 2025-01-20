@@ -1,8 +1,11 @@
 #include <gtest/gtest.h>
 #include <sstream>
+#include <string>
+#include <iostream>
 #include "FibonacciCached.h"
 #include "LRUCache.h"
 #include "LFUCache.h"
+#include "ValueNotFound.h"
 
 std::string findLastLine(const std::string& stdoutStr) {
     size_t lastNewlinePos = stdoutStr.rfind('\n',
@@ -18,14 +21,14 @@ TEST(RawCacheTests, SimpleLRUTest) {
     cache.put(2, 20);
     cache.put(3, 30);
     EXPECT_EQ(cache[2], 20);
-    EXPECT_EQ(cache[4], 0);
+    EXPECT_THROW(cache[4], ValueNotFound);
     cache.put(4, 40);
-    EXPECT_EQ(cache[1], 0);
-    cache.put(3, 33);
-    EXPECT_EQ(cache[3], 33);
+    EXPECT_THROW(cache[1], ValueNotFound);
+    cache.put(3, 30);
+    EXPECT_EQ(cache[3], 30);
     EXPECT_EQ(cache[4], 40);
     cache.put(1, 10);
-    EXPECT_EQ(cache[2], 0);
+    EXPECT_THROW(cache[2], ValueNotFound);
 }
 
 TEST(RawCacheTests, SimpleLFUTest) {
@@ -33,15 +36,15 @@ TEST(RawCacheTests, SimpleLFUTest) {
     cache.put(1, 10);
     cache.put(2, 20);
     cache.put(3, 30);
-    EXPECT_EQ(cache[4], 0);
+    EXPECT_THROW(cache[4], ValueNotFound);
     EXPECT_EQ(cache[3], 30);
     EXPECT_EQ(cache[3], 30);
     cache.put(4, 40);
     EXPECT_EQ(cache[4], 40);
-    EXPECT_EQ(cache[1], 0);
+    EXPECT_THROW(cache[1], ValueNotFound);
     EXPECT_EQ(cache[2], 20);
     cache.put(1, 10);
-    EXPECT_EQ(cache[2], 0);
+    EXPECT_THROW(cache[2], ValueNotFound);
 }
 
 TEST(FibCachedTests, SimpleTest) {

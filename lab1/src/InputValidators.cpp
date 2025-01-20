@@ -1,9 +1,12 @@
 #include "InputValidators.h"
 
-#include "FCExceptions.h"
+#include <memory>
+#include "InvalidCapArg.h"
+#include "InvalidTypeArg.h"
+#include "InvalidFibArg.h"
 
-InputValidator::InputValidator(int value, FCArgumentType type):
-    arg(value), argType(type) {
+ProgramArgumentsValidator::ProgramArgumentsValidator(
+    int value, FCArgumentType type): arg(value), argType(type) {
     switch (argType) {
     case(FCArgumentType::CACHE_CAPACITY):
         validator_ = std::make_unique<CacheCapacityValidator>();
@@ -17,7 +20,7 @@ InputValidator::InputValidator(int value, FCArgumentType type):
     }
 }
 
-void InputValidator::validate() const {
+void ProgramArgumentsValidator::validate() const {
     return validator_->validate(arg);
 }
 
