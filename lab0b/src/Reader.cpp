@@ -4,6 +4,8 @@
 #include <iostream>
 #include <fstream>
 #include <filesystem>
+#include <map>
+#include <string>
 
 Reader::Reader(const char* inputTXT): inputFile(inputTXT) {}
 

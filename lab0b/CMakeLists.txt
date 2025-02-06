@@ -5,13 +5,11 @@ set(TEST_NAME test_lab0b)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(GTest REQUIRED)
-enable_testing()
-
 set(SRC
         src/Reader.cpp
         src/FrequencyParser.cpp
         src/Writer.cpp
+        src/ArgsValidator.cpp
 )
 
 set(INCLUDE_DIRS
@@ -20,6 +18,9 @@ set(INCLUDE_DIRS
 
 add_executable(${PROJECT_NAME} src/main.cpp ${SRC})
 target_include_directories(${PROJECT_NAME} PRIVATE ${INCLUDE_DIRS})
+
+find_package(GTest REQUIRED)
+enable_testing()
 
 add_executable(${TEST_NAME} tests/test_lab0b.cpp ${SRC})
 target_include_directories(${TEST_NAME} PRIVATE ${INCLUDE_DIRS})

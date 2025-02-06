@@ -9,7 +9,7 @@ class CSVWriter {
  public:
     explicit CSVWriter(const char* outputCSV);
     void writeCSV(const std::vector<std::pair<std::string, int>>& wordList,
-        int wordsCount) const;
+                  size_t wordsCount) const;
  private:
     std::string outputFile;
 };
